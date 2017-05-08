@@ -16,20 +16,20 @@
 
 
 
-REM Controller festlegen
+'Controller festlegen
 
 $regfile = "attiny13.dat"
 
-REM Taktfrequenz festlegen
+'Taktfrequenz festlegen
 
 $crystal = 1200000
 
-REM Hardwarestuck festlegen
+'Hardwarestuck festlegen
 
 $hwstack = 18
 $swstack = 8
 
-REM Declare Input & Output
+'Declare Input & Output
 
 Config Pinb.0 = Input
 Config Portb.1 = Output
@@ -37,7 +37,7 @@ Config Portb.2 = Output
 Config Portb.3 = Output
 Config Portb.4 = Output
 
-REM Declare Sub-circuits
+'Declare Sub-circuits
 
 Declare Sub Eingabe
 Declare Sub Aufruf
@@ -47,27 +47,27 @@ Declare Sub Drei
 Declare Sub Fuenf
 Declare Function Fibo(byval A As Integer) As Integer
 
-REM Namen für einzelne Nummern geben
+'Namen für einzelne Nummern geben
 
-REM 'Zahl Eins
+''Zahl Eins
 E Alias Portb.4
-REM 'Zahl Zwei
+''Zahl Zwei
 Z Alias Portb.3
-REM Zahl Vier
+'Zahl Vier
 V Alias Portb.1
 
-REM Sub-circuit für die Eingabe mit Taster
+'Sub-circuit für die Eingabe mit Taster
 
 Sub Eingabe
    Do
-   REM Anfrage an den taster
+   'Anfrage an den taster
       If Pinb.0 = 1 Then Call Aufruf
-      REM entprellen
+      'entprellen
       Waitms 50
    Loop
 End Sub
 
-REM sub-circuits für den Aufruf der fibbonacci funktion & einzelne Zahlen
+'sub-circuits für den Aufruf der fibbonacci funktion & einzelne Zahlen
 
 Sub Aufruf
 Dim A As Integer
@@ -88,7 +88,7 @@ Dim T As Integer
    Next
 End Sub
 
-REM Fibo Function mit den Parametern A --> fibonacci Zahl zu berechnen
+'Fibo Function mit den Parametern A --> fibonacci Zahl zu berechnen
 
 Function Fibo(byval A As Integer) As Integer
    Local Sum As Integer
@@ -133,8 +133,9 @@ Sub Fuenf
    Set Z
    Set 4
 End Sub
+                                          
+' Animation zum Uebergang Sub-circuit
 
-                                          Rem Animation zum Uebergang Sub-circuit
-
-                                                 
+'Sub Uebergang
+'End Sub
 
