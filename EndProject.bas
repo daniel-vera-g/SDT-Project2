@@ -1,16 +1,35 @@
-'Controller festlegen
+'( No worries. This is a block comment ;D
+
+   EndProject.bas
+
+   Created at: 08.05.2017
+
+   Display the numbers from Fibonacii on a dice.
+   BEWARE! These Numbers are limited!
+
+   The Program itself should work now fine. But there is a Risk, that the Soft-
+   or Hardwarestack may not be suitable for this type of program. The Program
+   itself has to make some recursive calls. These calls have to be left on the
+   Stack. There is a possibility of "overgrowing the stack".
+
+')
+
+
+
+REM Controller festlegen
 
 $regfile = "attiny13.dat"
 
-'Taktfrequenz festlegen
+REM Taktfrequenz festlegen
 
 $crystal = 1200000
 
-'Hardwarestuck festlegen
+REM Hardwarestuck festlegen
 
-$hwstack = 2
+$hwstack = 18
+$swstack = 8
 
-'Declare Input & Output
+REM Declare Input & Output
 
 Config Pinb.0 = Input
 Config Portb.1 = Output
@@ -18,72 +37,77 @@ Config Portb.2 = Output
 Config Portb.3 = Output
 Config Portb.4 = Output
 
-'Declare Sub-circuits
+REM Declare Sub-circuits
 
 Declare Sub Eingabe
 Declare Sub Aufruf
-Declare Sub Fibo
 Declare Sub Eins
 Declare Sub Zwei
 Declare Sub Drei
 Declare Sub Fuenf
 Declare Function Fibo(byval A As Integer) As Integer
 
-'Namen für einzelne Nummern geben
+REM Namen fÃ¼r einzelne Nummern geben
 
-''Zahl Eins
+REM 'Zahl Eins
 E Alias Portb.4
-''Zahl Zwei
+REM 'Zahl Zwei
 Z Alias Portb.3
-'Zahl Vier
+REM Zahl Vier
 V Alias Portb.1
 
-'Sub-circuit für die Eingabe mit Taster
+REM Sub-circuit fÃ¼r die Eingabe mit Taster
 
 Sub Eingabe
-Do
-   'Anfrage an den taster
-   If Pinb.0 = 1 Then Call Aufruf
-   'entprellen
-   Waitms 50
+   Do
+   REM Anfrage an den taster
+      If Pinb.0 = 1 Then Call Aufruf
+      REM entprellen
+      Waitms 50
    Loop
 End Sub
 
-'sub-circuits für den Aufruf der fibbonacci funktion & einzelne Zahlen
+REM sub-circuits fÃ¼r den Aufruf der fibbonacci funktion & einzelne Zahlen
 
 Sub Aufruf
 Dim A As Integer
 Dim T As Integer
    For A = 0 To 6 Step 1
-   T = Fibo(a)
-   If T = 1 Then
-   Call Eins
-   Elseif T = 2 Then
-   Call Zwei
-   Elseif T = 3 Then
-   Call Drei
-   Elseif T = 3 Then
-   Call Drei
-   Elseif T = 5 Then
-   Call Fuenf
-   End If
+     T = Fibo(a)
+     If T = 1 Then
+        Call Eins
+     Elseif T = 2 Then
+        Call Zwei
+     Elseif T = 3 Then
+        Call Drei
+     Elseif T = 3 Then
+        Call Drei
+     Elseif T = 5 Then
+        Call Fuenf
+     End If
    Next
 End Sub
 
-'Fibo Function mit den Parametern A --> fibonacci Zahl zu berechnen
+REM Fibo Function mit den Parametern A --> fibonacci Zahl zu berechnen
 
 Function Fibo(byval A As Integer) As Integer
-   If A = 1 Or A = 2 Then
-   Return 1
-   Else Then
-   Return Fibo(a -2) + Fibo(a -1)
+   Local Sum As Integer
+   Dim Sum1 As Integer
+
+   If A < 3 Then
+      Fibo = 1
+   Else
+      Sum = A - 2
+      Sum1 = A - 1
+      Sum = Fibo(sum)
+      Sum1 = Fibo(sum1)
+      Sum1 = Sum + Sum1
    End If
 End Function
 
 
 
 Sub Eins
-Do
    Reset Z
    Set E
 End Sub
@@ -110,13 +134,7 @@ Sub Fuenf
    Set 4
 End Sub
 
-Rem Animation zum Übergang Sub-circuit
+                                          Rem Animation zum Uebergang Sub-circuit
 
-'Sub Uebergang
-'End Sub
-
-
-
-
-
+                                                 
 
