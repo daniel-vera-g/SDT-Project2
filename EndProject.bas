@@ -1,16 +1,16 @@
 '( No worries. This is a block comment ;D
 
-   EndProject.bas
+   Endproject.bas
 
-   Created at: 08.05.2017
+   Created At : 08.05.2017
 
-   Display the numbers from Fibonacii on a dice.
-   BEWARE! These Numbers are limited!
+   Display The Numbers From Fibonacii On A Dice.
+   Beware! These Numbers Are Limited!
 
-   The Program itself should work now fine. But there is a Risk, that the Soft-
+   The Program Itself Should Work Now Fine. But There Is A Risk , That The Soft -
    or Hardwarestack may not be suitable for this type of program. The Program
-   itself has to make some recursive calls. These calls have to be left on the
-   Stack. There is a possibility of "overgrowing the stack".
+   Itself Has To Make Some Recursive Calls. These Calls Have To Be Left On The
+   Stack. There Is A Possibility Of "overgrowing the stack".
 
 ')
 
@@ -26,8 +26,8 @@ $crystal = 1200000
 
 'Hardwarestuck festlegen
 
-$hwstack = 18
-$swstack = 8
+$hwstack = 10
+$swstack = 18
 
 'Declare Input & Output
 
@@ -40,12 +40,13 @@ Config Portb.4 = Output
 'Declare Sub-circuits
 
 Declare Sub Eingabe
+Declare Sub Clearled
 Declare Sub Aufruf
 Declare Sub Eins
 Declare Sub Zwei
 Declare Sub Drei
 Declare Sub Fuenf
-Declare Function Fibo(byval A As Integer) As Integer
+Declare Function Fibo(byval A As Byte) As Byte
 
 'Namen für einzelne Nummern geben
 
@@ -61,25 +62,31 @@ V Alias Portb.1
 Sub Eingabe
    Do
    'Anfrage an den taster
-      If Pinb.0 = 1 Then Call Aufruf
+      If Pinb.0 = 1 Then
+         Call Aufruf
+         Waitms 50
+      End If
       'entprellen
-      Waitms 50
+
    Loop
 End Sub
 
 'sub-circuits für den Aufruf der fibbonacci funktion & einzelne Zahlen
 
 Sub Aufruf
-Dim A As Integer
-Dim T As Integer
-   For A = 0 To 6 Step 1
+Dim A As Byte
+Dim T As Byte
+   For A = 1 To 3 Step 1
+
      T = Fibo(a)
+     Waitms 1500
+     Call Clearled
+     Waitms 500
+
      If T = 1 Then
         Call Eins
      Elseif T = 2 Then
         Call Zwei
-     Elseif T = 3 Then
-        Call Drei
      Elseif T = 3 Then
         Call Drei
      Elseif T = 5 Then
@@ -90,9 +97,9 @@ End Sub
 
 'Fibo Function mit den Parametern A --> fibonacci Zahl zu berechnen
 
-Function Fibo(byval A As Integer) As Integer
-   Local Sum As Integer
-   Dim Sum1 As Integer
+Function Fibo(byval A As Byte) As Byte
+   Local Sum As Byte
+   Dim Sum1 As Byte
 
    If A < 3 Then
       Fibo = 1
@@ -102,20 +109,29 @@ Function Fibo(byval A As Integer) As Integer
       Sum = Fibo(sum)
       Sum1 = Fibo(sum1)
       Sum1 = Sum + Sum1
+      Fibo = Sum1
    End If
 End Function
 
 
 
+Sub Clearled
+   Portb.1 = 0
+   Portb.2 = 0
+   Portb.3 = 0
+   Portb.4 = 0
+End Sub
+
+
 Sub Eins
-   Reset Z
+Reset Z
    Set E
 End Sub
 
 
 
 Sub Zwei
-   Reset E
+Reset E
    Set Z
 End Sub
 
@@ -131,11 +147,10 @@ End Sub
 Sub Fuenf
    Set E
    Set Z
-   Set 4
+   Set V
 End Sub
-                                          
+
 ' Animation zum Uebergang Sub-circuit
 
 'Sub Uebergang
 'End Sub
-
